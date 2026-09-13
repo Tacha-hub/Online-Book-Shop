@@ -4,8 +4,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import work.onlinebookshop.config.MapperConfig;
-import work.onlinebookshop.dto.BookDto;
-import work.onlinebookshop.dto.CreateBookRequestDto;
+import work.onlinebookshop.dto.book.BookDto;
+import work.onlinebookshop.dto.book.CreateBookRequestDto;
 import work.onlinebookshop.model.Book;
 
 @Mapper(config = MapperConfig.class)

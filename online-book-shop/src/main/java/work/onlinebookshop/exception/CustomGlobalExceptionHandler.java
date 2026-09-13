@@ -40,4 +40,10 @@ public class CustomGlobalExceptionHandler {
     ) {
         return Map.of(ERROR_KEY, exception.getMessage());
     }
+
+    @ExceptionHandler(RegistrationException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public Map<String, String> handleRegistrationException(RegistrationException exception) {
+        return Map.of(ERROR_KEY, exception.getMessage());
+    }
 }

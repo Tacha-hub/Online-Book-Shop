@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import work.onlinebookshop.dto.BookDto;
-import work.onlinebookshop.dto.BookSearchParameterDto;
-import work.onlinebookshop.dto.CreateBookRequestDto;
+import work.onlinebookshop.dto.book.BookDto;
+import work.onlinebookshop.dto.book.BookSearchParameterDto;
+import work.onlinebookshop.dto.book.CreateBookRequestDto;
 import work.onlinebookshop.service.BookService;
 
 @Tag(name = "Book management", description = "Endpoint for managing books")

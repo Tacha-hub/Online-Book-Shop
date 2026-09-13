@@ -2,9 +2,9 @@ package work.onlinebookshop.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import work.onlinebookshop.dto.BookDto;
-import work.onlinebookshop.dto.BookSearchParameterDto;
-import work.onlinebookshop.dto.CreateBookRequestDto;
+import work.onlinebookshop.dto.book.BookDto;
+import work.onlinebookshop.dto.book.BookSearchParameterDto;
+import work.onlinebookshop.dto.book.CreateBookRequestDto;
 
 public interface BookService {
     BookDto save(CreateBookRequestDto bookDto);
