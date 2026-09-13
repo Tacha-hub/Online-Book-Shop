@@ -1,5 +1,9 @@
 package work.onlinebookshop.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,9 +17,18 @@ import work.onlinebookshop.service.UserService;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/auth")
+@Tag(name = "Authentication", description = "User registration")
 public class AuthenticationController {
     private final UserService userService;
+
+    @Operation(summary = "Register a new user",
+            description = "Creates a user with a unique email address")
+
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "User registered successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid registration data"),
+            @ApiResponse(responseCode = "409", description = "Email is already registered") })
 
     @PostMapping("/registration")
     public UserResponseDto register(@Valid @RequestBody UserRegistrationRequestDto requestDto)
