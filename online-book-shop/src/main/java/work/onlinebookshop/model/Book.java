@@ -33,6 +33,6 @@ public class Book {
     private String description;
     private String coverImage;
 
-    @Column(nullable = false)
+    @Column(name = "is_deleted", nullable = false)
     private boolean deleted = false;
 }
