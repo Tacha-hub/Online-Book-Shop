@@ -14,8 +14,10 @@ import java.util.HashSet;
 import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
+import org.hibernate.type.SqlTypes;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -40,6 +42,7 @@ public class User implements UserDetails {
 
     private String shippingAddress;
 
+    @JdbcTypeCode(SqlTypes.TINYINT)
     @Column(nullable = false)
     private boolean isDeleted;
 
