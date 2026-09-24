@@ -75,5 +75,4 @@ public class BookController {
     public Page<BookDto> search(BookSearchParameterDto searchParams, Pageable pageable) {
         return bookService.search(searchParams, pageable);
     }
-
 }

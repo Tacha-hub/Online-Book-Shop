@@ -10,9 +10,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import work.onlinebookshop.dto.user.UserLoginRequestDto;
+import work.onlinebookshop.dto.user.UserLoginResponseDto;
 import work.onlinebookshop.dto.user.UserRegistrationRequestDto;
 import work.onlinebookshop.dto.user.UserResponseDto;
 import work.onlinebookshop.exception.RegistrationException;
+import work.onlinebookshop.security.AuthenticationService;
 import work.onlinebookshop.service.UserService;
 
 @RequiredArgsConstructor
@@ -21,6 +24,7 @@ import work.onlinebookshop.service.UserService;
 @Tag(name = "Authentication", description = "User registration")
 public class AuthenticationController {
     private final UserService userService;
+    private final AuthenticationService authenticationService;
 
     @Operation(summary = "Register a new user",
             description = "Creates a user with a unique email address")
@@ -36,4 +40,8 @@ public class AuthenticationController {
         return userService.register(requestDto);
     }
 
+    @PostMapping("/login")
+    public UserLoginResponseDto login(@Valid @RequestBody UserLoginRequestDto requestDto) {
+        return authenticationService.authenticate(requestDto);
+    }
 }

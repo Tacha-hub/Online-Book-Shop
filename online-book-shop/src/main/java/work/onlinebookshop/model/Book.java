@@ -9,10 +9,8 @@ import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
-import org.hibernate.type.SqlTypes;
 
 @Entity
 @Getter
@@ -35,7 +33,6 @@ public class Book {
     private String description;
     private String coverImage;
 
-    @JdbcTypeCode(SqlTypes.TINYINT)
     @Column(name = "is_deleted", nullable = false)
     private boolean deleted = false;
 }
