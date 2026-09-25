@@ -34,7 +34,7 @@ public class AuthenticationController {
             @ApiResponse(responseCode = "409", description = "Email is already registered")
             })
 
-    @PostMapping({"/registration"})
+    @PostMapping("/registration")
     public UserResponseDto register(@Valid @RequestBody UserRegistrationRequestDto requestDto)
             throws RegistrationException {
         return userService.register(requestDto);

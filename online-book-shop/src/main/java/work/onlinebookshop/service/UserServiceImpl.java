@@ -33,10 +33,10 @@ public class UserServiceImpl implements UserService {
         }
         User user = userMapper.toEntity(requestDto);
         Role roleUser = roleRepository.findByName(RoleName.ROLE_USER)
-                .orElseThrow(() -> new EntityNotFoundException("Default user role is missing"));
+                .orElseThrow(() -> new EntityNotFoundException("Default user role is missing"
+                        + RoleName.ROLE_USER));
         user.setRoles(Set.of(roleUser));
         user.setPassword(passwordEncoder.encode(requestDto.getPassword()));
-        user.setEmail(requestDto.getEmail());
         User savedUser = userRepository.save(user);
         return userMapper.toUserResponse(savedUser);
     }

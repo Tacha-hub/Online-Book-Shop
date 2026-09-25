@@ -1,7 +1,6 @@
 package work.onlinebookshop.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,7 +21,6 @@ import work.onlinebookshop.dto.book.BookSearchParameterDto;
 import work.onlinebookshop.dto.book.CreateBookRequestDto;
 import work.onlinebookshop.service.BookService;
 
-@SecurityRequirement(name = "bearerAuth")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("books")
