@@ -28,17 +28,22 @@ public class AuthenticationController {
 
     @Operation(summary = "Register a new user",
             description = "Creates a user with a unique email address")
-
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "User registered successfully"),
             @ApiResponse(responseCode = "400", description = "Invalid registration data"),
-            @ApiResponse(responseCode = "409", description = "Email is already registered") })
+            @ApiResponse(responseCode = "409", description = "Email is already registered")
+            })
 
     @PostMapping({"/registration"})
     public UserResponseDto register(@Valid @RequestBody UserRegistrationRequestDto requestDto)
             throws RegistrationException {
         return userService.register(requestDto);
     }
+
+    @Operation(summary = "User login",
+            description = "Authenticates a user by email and password and returns a JWT")
+    @ApiResponses({
+            @ApiResponse(responseCode = "401", description = "Invalid email or password")})
 
     @PostMapping("/login")
     public UserLoginResponseDto login(@Valid @RequestBody UserLoginRequestDto requestDto) {
