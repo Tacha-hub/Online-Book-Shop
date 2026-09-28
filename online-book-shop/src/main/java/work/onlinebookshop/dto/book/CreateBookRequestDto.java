@@ -1,6 +1,7 @@
 package work.onlinebookshop.dto.book;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import java.math.BigDecimal;
@@ -25,6 +26,6 @@ public class CreateBookRequestDto {
     private String description;
     private String coverImage;
 
-    @NotNull(message = "Category IDs are required")
+    @NotEmpty(message = "Category IDs are required")
     private List<@NotNull @Positive Long> categoryIds;
 }

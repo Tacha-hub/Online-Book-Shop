@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import work.onlinebookshop.dto.category.BookDtoWithoutCategoryIds;
 import work.onlinebookshop.dto.category.CategoryDto;
+import work.onlinebookshop.dto.category.CreateCategoryRequestDto;
 import work.onlinebookshop.service.BookService;
 import work.onlinebookshop.service.CategoryService;
 
@@ -35,7 +36,7 @@ public class CategoryController {
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Create a category")
-    public CategoryDto createCategory(@RequestBody @Valid CategoryDto categoryDto) {
+    public CategoryDto createCategory(@RequestBody @Valid CreateCategoryRequestDto categoryDto) {
         return categoryService.save(categoryDto);
     }
 
@@ -57,7 +58,7 @@ public class CategoryController {
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Update a category")
     public CategoryDto updateCategory(@PathVariable Long id,
-            @RequestBody @Valid CategoryDto categoryDto) {
+                                      @RequestBody @Valid CreateCategoryRequestDto categoryDto) {
         return categoryService.update(id, categoryDto);
     }
 

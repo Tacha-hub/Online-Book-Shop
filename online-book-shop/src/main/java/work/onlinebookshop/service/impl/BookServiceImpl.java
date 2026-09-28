@@ -1,6 +1,5 @@
 package work.onlinebookshop.service.impl;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -34,9 +33,8 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto save(CreateBookRequestDto bookDto) {
-        Set<Category> categories = findCategories(bookDto.getCategoryIds());
         Book book = bookMapper.toEntity(bookDto);
-        book.setCategories(categories);
+        book.setCategories(categoriesIdToCategories(bookDto.getCategoryIds()));
         return bookMapper.toDto(bookRepository.save(book));
     }
 
@@ -57,10 +55,8 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookDto update(Long id, CreateBookRequestDto bookDto) {
         Book book = findBookById(id);
-        Set<Category> categories = findCategories(bookDto.getCategoryIds());
         bookMapper.updateBookFromDto(bookDto, book);
-        book.getCategories().clear();
-        book.getCategories().addAll(categories);
+        book.setCategories(categoriesIdToCategories(bookDto.getCategoryIds()));
         return bookMapper.toDto(bookRepository.save(book));
     }
 
@@ -93,16 +89,9 @@ public class BookServiceImpl implements BookService {
                 .map(bookMapper::toDtoWithoutCategories);
     }
 
-    private Set<Category> findCategories(List<Long> categoryIds) {
-        Set<Long> requestedIds = new HashSet<>(categoryIds);
-        List<Category> categories = categoryRepository.findAllById(requestedIds);
-        Set<Long> foundIds = categories.stream()
-                .map(Category::getId)
+    private Set<Category> categoriesIdToCategories(List<Long> categories) {
+        return categories.stream()
+                .map(categoryRepository::getReferenceById)
                 .collect(Collectors.toSet());
-        requestedIds.removeAll(foundIds);
-        if (!requestedIds.isEmpty()) {
-            throw new EntityNotFoundException("Categories not found by IDs: " + requestedIds);
-        }
-        return new HashSet<>(categories);
     }
 }

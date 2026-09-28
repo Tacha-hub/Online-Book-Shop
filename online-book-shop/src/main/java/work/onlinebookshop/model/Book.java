@@ -2,7 +2,6 @@ package work.onlinebookshop.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -44,9 +43,9 @@ public class Book {
     @Column(name = "is_deleted", nullable = false)
     private boolean deleted = false;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     @JoinTable(
-            name = "book_category",
+            name = "book_categories",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     @ToString.Exclude

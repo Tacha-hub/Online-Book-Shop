@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import work.onlinebookshop.dto.category.CategoryDto;
+import work.onlinebookshop.dto.category.CreateCategoryRequestDto;
 import work.onlinebookshop.exception.EntityNotFoundException;
 import work.onlinebookshop.mapper.CategoryMapper;
 import work.onlinebookshop.model.Category;
@@ -32,16 +33,15 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryDto save(CategoryDto categoryDto) {
-        Category category = categoryMapper.toEntity(categoryDto);
+    public CategoryDto save(CreateCategoryRequestDto requestDto) {
+        Category category = categoryMapper.toEntity(requestDto);
         return categoryMapper.toDto(categoryRepository.save(category));
     }
 
     @Override
-    public CategoryDto update(Long id, CategoryDto categoryDto) {
+    public CategoryDto update(Long id, CreateCategoryRequestDto requestDto) {
         Category category = findCategoryById(id);
-        category.setName(categoryDto.getName());
-        category.setDescription(categoryDto.getDescription());
+        categoryMapper.updateCategoryFromDto(requestDto, category);
         return categoryMapper.toDto(categoryRepository.save(category));
     }
 

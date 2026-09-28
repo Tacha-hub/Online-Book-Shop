@@ -4,7 +4,7 @@ databaseChangeLog:
       author: tacha
       changes:
         - createTable:
-            tableName: book_category
+            tableName: book_categories
             columns:
               - column:
                   name: book_id
