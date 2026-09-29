@@ -41,11 +41,11 @@ public class Book {
     private String coverImage;
 
     @Column(name = "is_deleted", nullable = false)
-    private boolean deleted = false;
+    private boolean isDeleted = false;
 
     @ManyToMany
     @JoinTable(
-            name = "book_category",
+            name = "book_categories",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     @ToString.Exclude
