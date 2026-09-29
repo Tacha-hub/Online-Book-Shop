@@ -1,4 +1,4 @@
-package work.onlinebookshop.service;
+package work.onlinebookshop.service.impl;
 
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +15,7 @@ import work.onlinebookshop.model.Role.RoleName;
 import work.onlinebookshop.model.User;
 import work.onlinebookshop.repository.RoleRepository;
 import work.onlinebookshop.repository.UserRepository;
+import work.onlinebookshop.service.UserService;
 
 @Service
 @RequiredArgsConstructor

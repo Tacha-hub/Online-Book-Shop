@@ -5,3 +5,7 @@ databaseChangeLog:
       file: db/changelog/changes/02-create-user-table.yaml
   - include:
       file: db/changelog/changes/03-add-security.yaml
+  - include:
+      file: db/changelog/changes/04-create-categories-table.yaml
+  - include:
+      file: db/changelog/changes/05-create-book-category-table.yaml
