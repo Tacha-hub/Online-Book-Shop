@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import work.onlinebookshop.dto.book.BookDto;
 import work.onlinebookshop.dto.book.BookSearchParameterDto;
 import work.onlinebookshop.dto.book.CreateBookRequestDto;
+import work.onlinebookshop.dto.category.BookDtoWithoutCategoryIds;
 import work.onlinebookshop.exception.EntityNotFoundException;
 import work.onlinebookshop.mapper.BookMapper;
 import work.onlinebookshop.model.Book;
@@ -81,5 +82,16 @@ public class BookServiceImpl implements BookService {
     public Page<BookDto> search(BookSearchParameterDto searchParam, Pageable pageable) {
         Specification<Book> bookSpecification = bookSpecificationBuilder.build(searchParam);
         return bookRepository.findAll(bookSpecification, pageable).map(bookMapper::toDto);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<BookDtoWithoutCategoryIds> getBooksByCategoryId(
+            Long categoryId, Pageable pageable) {
+        if (!categoryRepository.existsById(categoryId)) {
+            throw new EntityNotFoundException("Category not found by id: " + categoryId);
+        }
+        return bookRepository.findAllByCategoriesId(categoryId, pageable)
+                .map(bookMapper::toDtoWithoutCategories);
     }
 }

@@ -9,6 +9,7 @@ import org.mapstruct.Named;
 import work.onlinebookshop.config.MapperConfig;
 import work.onlinebookshop.dto.book.BookDto;
 import work.onlinebookshop.dto.book.CreateBookRequestDto;
+import work.onlinebookshop.dto.category.BookDtoWithoutCategoryIds;
 import work.onlinebookshop.model.Book;
 import work.onlinebookshop.model.Category;
 
@@ -16,6 +17,8 @@ import work.onlinebookshop.model.Category;
 public interface BookMapper {
     @Mapping(target = "categoryIds", source = "categories", qualifiedByName = "categoryIds")
     BookDto toDto(Book book);
+
+    BookDtoWithoutCategoryIds toDtoWithoutCategories(Book book);
 
     @Named("categoryIds")
     default Set<Long> categoryIds(Set<Category> categories) {
