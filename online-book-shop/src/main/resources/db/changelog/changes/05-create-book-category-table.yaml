@@ -17,11 +17,11 @@ databaseChangeLog:
                   constraints:
                     nullable: false
         - addPrimaryKey:
-            tableName: book_categories
+            tableName: books_categories
             columnNames: book_id, category_id
             constraintName: pk_book_category
         - addForeignKeyConstraint:
-            baseTableName: book_categories
+            baseTableName: books_categories
             baseColumnNames: book_id
             referencedTableName: books
             referencedColumnNames: id
@@ -33,7 +33,7 @@ databaseChangeLog:
             referencedColumnNames: id
             constraintName: fk_book_category_category
         - createIndex:
-            tableName: book_categories
+            tableName: books_categories
             indexName: idx_book_category_category_id
             columns:
               - column:
