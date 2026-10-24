@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import work.onlinebookshop.dto.book.BookDto;
 import work.onlinebookshop.dto.book.BookSearchParameterDto;
 import work.onlinebookshop.dto.book.CreateBookRequestDto;
+import work.onlinebookshop.dto.category.BookDtoWithoutCategoryIds;
 
 public interface BookService {
     BookDto save(CreateBookRequestDto bookDto);
@@ -18,4 +19,7 @@ public interface BookService {
     void deleteById(Long id);
 
     Page<BookDto> search(BookSearchParameterDto searchParams, Pageable pageable);
+
+    Page<BookDtoWithoutCategoryIds> getBooksByCategoryId(
+            Long categoryId, Pageable pageable);
 }
