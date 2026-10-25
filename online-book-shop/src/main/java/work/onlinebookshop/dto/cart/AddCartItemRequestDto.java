@@ -10,7 +10,6 @@ public class AddCartItemRequestDto {
     @Positive
     private Long bookId;
 
-    @NotNull
     @Positive
-    private Integer quantity;
+    private int quantity;
 }
