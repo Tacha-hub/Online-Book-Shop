@@ -10,6 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import jakarta.persistence.Version;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,4 +34,7 @@ public class CartItem {
 
     @Column(nullable = false)
     private int quantity;
+
+    @Version
+    private long version;
 }

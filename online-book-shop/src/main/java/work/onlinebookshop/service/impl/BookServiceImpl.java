@@ -17,6 +17,7 @@ import work.onlinebookshop.exception.EntityNotFoundException;
 import work.onlinebookshop.mapper.BookMapper;
 import work.onlinebookshop.model.Book;
 import work.onlinebookshop.model.Category;
+import work.onlinebookshop.repository.CartItemRepository;
 import work.onlinebookshop.repository.CategoryRepository;
 import work.onlinebookshop.repository.book.BookRepository;
 import work.onlinebookshop.repository.book.BookSpecificationBuilder;
@@ -29,6 +30,7 @@ public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
     private final CategoryRepository categoryRepository;
+    private final CartItemRepository cartItemRepository;
     private final BookSpecificationBuilder bookSpecificationBuilder;
 
     @Override
@@ -61,6 +63,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public void deleteById(Long id) {
         Book book = findBookById(id);
+        cartItemRepository.deleteAllByBookId(id);
         bookRepository.delete(book);
     }
 

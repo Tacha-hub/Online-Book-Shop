@@ -13,3 +13,13 @@ databaseChangeLog:
       file: db/changelog/changes/06-create-shopping-cart-table.yaml
   - include:
       file: db/changelog/changes/07-create-cart-item-table.yaml
+  - include:
+      file: db/changelog/changes/08-update-book-category-constraints.yaml
+  - include:
+      file: db/changelog/changes/09-add-shopping-cart-deleted-flag.yaml
+  - include:
+      file: db/changelog/changes/10-use-user-id-as-shopping-cart-primary-key.yaml
+  - include:
+      file: db/changelog/changes/11-add-cart-item-version.yaml
+  - include:
+      file: db/changelog/changes/12-remove-deleted-books-from-carts.yaml
