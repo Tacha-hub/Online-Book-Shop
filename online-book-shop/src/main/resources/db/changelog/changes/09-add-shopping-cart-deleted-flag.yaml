@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-shopping-cart-deleted-flag
+      author: tacha
+      changes:
+        - addColumn:
+            tableName: shopping_carts
+            columns:
+              - column:
+                  name: is_deleted
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
