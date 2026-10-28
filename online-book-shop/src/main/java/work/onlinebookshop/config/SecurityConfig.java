@@ -1,5 +1,6 @@
 package work.onlinebookshop.config;
 
+import jakarta.servlet.DispatcherType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,6 +36,8 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         auth -> auth
+                                .dispatcherTypeMatchers(DispatcherType.ERROR)
+                                .permitAll()
                                 .requestMatchers("/auth/**",
                                        "/swagger-ui/**",
                                         "/v3/api-docs/**")
