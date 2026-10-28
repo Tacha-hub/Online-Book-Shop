@@ -18,63 +18,60 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import work.onlinebookshop.dto.category.BookDtoWithoutCategoryIds;
+import work.onlinebookshop.dto.book.BookDto;
 import work.onlinebookshop.dto.category.CategoryDto;
 import work.onlinebookshop.dto.category.CreateCategoryRequestDto;
-import work.onlinebookshop.service.BookService;
 import work.onlinebookshop.service.CategoryService;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/categories")
-@Tag(name = "Categories", description = "Category browsing and management")
+@Tag(name = "Categories", description = "Manage book categories")
 public class CategoryController {
     private final CategoryService categoryService;
-    private final BookService bookService;
-
-    @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
-    @ResponseStatus(HttpStatus.CREATED)
-    @Operation(summary = "Create a category")
-    public CategoryDto createCategory(@RequestBody @Valid CreateCategoryRequestDto categoryDto) {
-        return categoryService.save(categoryDto);
-    }
 
     @GetMapping
     @PreAuthorize("hasRole('USER')")
     @Operation(summary = "Get categories with pagination and sorting")
-    public Page<CategoryDto> getAll(@ParameterObject Pageable pageable) {
+    public Page<CategoryDto> findAll(@ParameterObject Pageable pageable) {
         return categoryService.findAll(pageable);
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('USER')")
-    @Operation(summary = "Get a category by ID")
-    public CategoryDto getCategoryById(@PathVariable Long id) {
+    @Operation(summary = "Get a category by id")
+    public CategoryDto getById(@PathVariable Long id) {
         return categoryService.getById(id);
+    }
+
+    @GetMapping("/{id}/books")
+    @PreAuthorize("hasRole('USER')")
+    @Operation(summary = "Get books in a category with pagination and sorting")
+    public Page<BookDto> getBooks(@PathVariable Long id, @ParameterObject Pageable pageable) {
+        return categoryService.getBooks(id, pageable);
+    }
+
+    @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "Create a category")
+    public CategoryDto create(@Valid @RequestBody CreateCategoryRequestDto request) {
+        return categoryService.save(request);
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Update a category")
-    public CategoryDto updateCategory(@PathVariable Long id,
-                                      @RequestBody @Valid CreateCategoryRequestDto categoryDto) {
-        return categoryService.update(id, categoryDto);
+    public CategoryDto update(@PathVariable Long id,
+            @Valid @RequestBody CreateCategoryRequestDto request) {
+        return categoryService.update(id, request);
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Delete a category")
-    public void deleteCategory(@PathVariable Long id) {
+    public void delete(@PathVariable Long id) {
         categoryService.deleteById(id);
-    }
-
-    @GetMapping("/{id}/books")
-    @PreAuthorize("hasRole('USER')")
-    @Operation(summary = "Get books by category with pagination and sorting")
-    public Page<BookDtoWithoutCategoryIds> getBooksByCategoryId(@PathVariable Long id,
-            @ParameterObject Pageable pageable) {
-        return bookService.getBooksByCategoryId(id, pageable);
     }
 }

@@ -1,0 +1,28 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-shopping-cart-table
+      author: tacha
+      changes:
+        - createTable:
+            tableName: shopping_carts
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    unique: true
+                    references: users(id)
+                    foreignKeyName: fk_shopping_carts_user
+        - sql:
+            sql: >-
+              INSERT INTO shopping_carts (user_id)
+              SELECT id FROM users
+              WHERE NOT EXISTS (SELECT 1 FROM shopping_carts c WHERE c.user_id = users.id)

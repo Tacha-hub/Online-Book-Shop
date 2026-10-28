@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-cart-item-version
+      author: tacha
+      changes:
+        - addColumn:
+            tableName: cart_items
+            columns:
+              - column:
+                  name: version
+                  type: BIGINT
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false

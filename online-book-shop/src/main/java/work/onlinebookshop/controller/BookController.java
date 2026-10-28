@@ -1,6 +1,7 @@
 package work.onlinebookshop.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
@@ -25,6 +26,7 @@ import work.onlinebookshop.service.BookService;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("books")
+@Tag(name = "Books", description = "Manage books")
 public class BookController {
     private final BookService bookService;
 
@@ -69,7 +71,7 @@ public class BookController {
     @GetMapping("/search")
     @PreAuthorize("hasRole('USER')")
     @Operation(summary = "Search by parameters", description = "Get filtered and sorted pages")
-    public Page<BookDto> search(BookSearchParameterDto searchParams,
+    public Page<BookDto> search(@ParameterObject BookSearchParameterDto searchParams,
             @ParameterObject Pageable pageable) {
         return bookService.search(searchParams, pageable);
     }

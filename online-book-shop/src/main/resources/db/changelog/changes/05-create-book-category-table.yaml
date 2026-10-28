@@ -10,31 +10,17 @@ databaseChangeLog:
                   name: book_id
                   type: BIGINT
                   constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_books_categories
                     nullable: false
+                    references: books(id)
+                    foreignKeyName: fk_books_categories_book
               - column:
                   name: category_id
                   type: BIGINT
                   constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_books_categories
                     nullable: false
-        - addPrimaryKey:
-            tableName: books_categories
-            columnNames: book_id, category_id
-            constraintName: pk_book_category
-        - addForeignKeyConstraint:
-            baseTableName: books_categories
-            baseColumnNames: book_id
-            referencedTableName: books
-            referencedColumnNames: id
-            constraintName: fk_book_category_book
-        - addForeignKeyConstraint:
-            baseTableName: books_categories
-            baseColumnNames: category_id
-            referencedTableName: categories
-            referencedColumnNames: id
-            constraintName: fk_book_category_category
-        - createIndex:
-            tableName: books_categories
-            indexName: idx_book_category_category_id
-            columns:
-              - column:
-                  name: category_id
+                    references: categories(id)
+                    foreignKeyName: fk_books_categories_category

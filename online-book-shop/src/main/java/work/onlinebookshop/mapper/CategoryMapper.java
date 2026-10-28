@@ -10,15 +10,13 @@ import work.onlinebookshop.model.Category;
 
 @Mapper(config = MapperConfig.class)
 public interface CategoryMapper {
-
     CategoryDto toDto(Category category);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "deleted", ignore = true)
-    Category toEntity(CreateCategoryRequestDto requestDto);
+    Category toEntity(CreateCategoryRequestDto request);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "deleted", ignore = true)
-    void updateCategoryFromDto(CreateCategoryRequestDto requestDto,
-                               @MappingTarget Category category);
+    void updateFromDto(CreateCategoryRequestDto request, @MappingTarget Category category);
 }

@@ -15,6 +15,7 @@ import work.onlinebookshop.model.Role.RoleName;
 import work.onlinebookshop.model.User;
 import work.onlinebookshop.repository.RoleRepository;
 import work.onlinebookshop.repository.UserRepository;
+import work.onlinebookshop.service.ShoppingCartService;
 import work.onlinebookshop.service.UserService;
 
 @Service
@@ -24,6 +25,7 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
+    private final ShoppingCartService shoppingCartService;
 
     @Override
     @Transactional
@@ -39,6 +41,7 @@ public class UserServiceImpl implements UserService {
         user.setRoles(Set.of(roleUser));
         user.setPassword(passwordEncoder.encode(requestDto.getPassword()));
         User savedUser = userRepository.save(user);
+        shoppingCartService.createCart(savedUser);
         return userMapper.toUserResponse(savedUser);
     }
 }

@@ -2,6 +2,7 @@ package work.onlinebookshop.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import work.onlinebookshop.dto.book.BookDto;
 import work.onlinebookshop.dto.category.CategoryDto;
 import work.onlinebookshop.dto.category.CreateCategoryRequestDto;
 
@@ -10,9 +11,11 @@ public interface CategoryService {
 
     CategoryDto getById(Long id);
 
-    CategoryDto save(CreateCategoryRequestDto categoryDto);
+    CategoryDto save(CreateCategoryRequestDto request);
 
-    CategoryDto update(Long id, CreateCategoryRequestDto categoryDto);
+    CategoryDto update(Long id, CreateCategoryRequestDto request);
 
     void deleteById(Long id);
+
+    Page<BookDto> getBooks(Long id, Pageable pageable);
 }

@@ -1,5 +1,6 @@
 package work.onlinebookshop.security;
 
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -7,8 +8,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -31,19 +34,29 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String token = getToken(request);
 
         if (token != null) {
-            if (!jwtUtil.isValidToken(token)) {
-                response.sendError(
-                        HttpServletResponse.SC_UNAUTHORIZED,
-                        "Invalid or expired JWT token");
+            try {
+                if (!jwtUtil.isValidToken(token)) {
+                    throw new BadCredentialsException("Invalid or expired JWT token");
+                }
+                String username = jwtUtil.getUsername(token);
+                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+                if (!userDetails.isEnabled()
+                        || !userDetails.isAccountNonLocked()
+                        || !userDetails.isAccountNonExpired()
+                        || !userDetails.isCredentialsNonExpired()) {
+                    throw new BadCredentialsException("User account is unavailable");
+                }
+                Authentication authentication = new UsernamePasswordAuthenticationToken(
+                        userDetails, null, userDetails.getAuthorities());
+                var context = SecurityContextHolder.createEmptyContext();
+                context.setAuthentication(authentication);
+                SecurityContextHolder.setContext(context);
+            } catch (AuthenticationException | JwtException | IllegalArgumentException exception) {
+                SecurityContextHolder.clearContext();
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED,
+                        "Invalid token or unavailable user");
                 return;
             }
-
-            String username = jwtUtil.getUsername(token);
-            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-
-            Authentication authentication = new UsernamePasswordAuthenticationToken(
-                            userDetails, null, userDetails.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
         }
         filterChain.doFilter(request, response);
     }

@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class JwtUtil {
-    private Key secret;
+    private final Key secret;
 
     @Value("${jwt.expiration}")
     private long expiration;
@@ -39,7 +39,11 @@ public class JwtUtil {
                     .build()
                     .parseClaimsJws(token);
 
-            return !claimsJws.getBody().getExpiration().before(new Date());
+            Claims claims = claimsJws.getBody();
+            return claims.getExpiration() != null
+                    && claims.getExpiration().after(new Date())
+                    && claims.getSubject() != null
+                    && !claims.getSubject().isBlank();
         } catch (JwtException | IllegalArgumentException e) {
             return false;
         }
