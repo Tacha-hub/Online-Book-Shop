@@ -47,7 +47,7 @@ public class ShoppingCartController {
         return shoppingCartService.addBook(user.getId(), request);
     }
 
-    @PutMapping("/items/{cartItemId}")
+    @PutMapping("/cart-items/{cartItemId}")
     @Operation(summary = "Update a book's quantity in your cart")
     public ShoppingCartDto updateQuantity(@AuthenticationPrincipal User user,
             @PathVariable Long cartItemId,
@@ -55,7 +55,7 @@ public class ShoppingCartController {
         return shoppingCartService.updateQuantity(user.getId(), cartItemId, request);
     }
 
-    @DeleteMapping("/items/{cartItemId}")
+    @DeleteMapping("/cart-items/{cartItemId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Remove a book from your cart")
     public void removeBook(@AuthenticationPrincipal User user, @PathVariable Long cartItemId) {

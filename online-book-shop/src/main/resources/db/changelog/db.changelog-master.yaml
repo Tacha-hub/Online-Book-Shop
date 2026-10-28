@@ -23,3 +23,7 @@ databaseChangeLog:
       file: db/changelog/changes/11-add-cart-item-version.yaml
   - include:
       file: db/changelog/changes/12-remove-deleted-books-from-carts.yaml
+  - include:
+      file: db/changelog/changes/13-create-order-table.yaml
+  - include:
+      file: db/changelog/changes/14-create-order-item-table.yaml
